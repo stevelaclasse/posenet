@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3399FF</color>
+    <color name="colorPrimaryDark">#0066CC</color>
+    <color name="colorAccent">#2277ff</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="toastColorSuccess">#10E3FF</color>
+    <color name="toastColorError">#FF0000</color>
+    <color name="toastColorWarning">#FF9933</color>
+</resources>
+
+<!-- <color name="colorPrimaryDark">#3700B3</color>-->
+<!--<color name="colorPrimary">#7F00FF</color>-->

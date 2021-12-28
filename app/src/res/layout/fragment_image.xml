@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.ImageFragment">
+
+    <!-- The root container is vertically scrollable -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/img_view_dimens"
+            android:layout_marginStart="@dimen/margin_dimens"
+            android:layout_marginEnd="@dimen/margin_dimens"
+            android:layout_marginTop="@dimen/top_dimens_3"
+            android:padding="@dimen/top_dimens_1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@drawable/img_view_border" />
+
+        <Button
+            android:id="@+id/load_img_btn_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/img_view_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="@dimen/margin_dimens"
+            android:layout_marginTop="@dimen/top_dimens_1"
+            android:layout_marginEnd="@dimen/margin_dimens"
+            android:padding="3dp"
+            android:text="@string/load_image"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/buttonstyle"/>
+
+        <RadioGroup
+            android:id="@+id/select_model_grp_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/load_img_btn_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/top_dimens_1"
+            android:layout_marginStart="@dimen/top_dimens_2">
+
+            <RadioButton
+                android:id="@+id/select_model_single_pose_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Single-Pose model"
+                android:checked="true"
+                android:buttonTint="@color/colorPrimary"/>
+
+            <RadioButton
+                android:id="@+id/select_model_detect_plus_single_pose_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Detection &amp; Pose model"
+                android:buttonTint="@color/colorPrimary"/>
+
+            <RadioButton
+                android:id="@+id/select_model_multi_pose_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:text="Multi-Pose model" />
+        </RadioGroup>
+
+        <NumberPicker
+            android:id="@+id/number_of_detection_picker_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/load_img_btn_id"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginEnd="@dimen/margin_dimens"/>
+
+        <Button
+            android:id="@+id/detect_img_btn_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/select_model_grp_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="@dimen/margin_dimens"
+            android:layout_marginEnd="@dimen/margin_dimens"
+            android:layout_marginTop="@dimen/top_dimens_2"
+            android:text="@string/detect_person"
+            android:padding="3dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/buttonstyle"
+            android:layout_marginBottom="@dimen/top_dimens_2"/>
+
+        <!-- Add horizontal scroll view to display reconstructed images -->
+        <HorizontalScrollView
+            android:id="@+id/horizontal_scroll_id"
+            app:layout_constraintTop_toBottomOf="@id/detect_img_btn_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/top_dimens_1"
+            android:layout_marginBottom="@dimen/top_dimens_1"
+            android:layout_marginStart="@dimen/margin_dimens"
+            android:layout_marginEnd="@dimen/margin_dimens"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+
+            android:layout_height="300dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/horizontal_layout_id"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/top_dimens_1"
+                android:layout_marginBottom="@dimen/top_dimens_1"
+                >
+
+                <!-- Image view with the detection on it and without text description -->
+                <ImageView
+                    android:id="@+id/img_and_detection_id"
+                    android:layout_width="257dp"
+                    android:layout_height="257dp"
+                    android:padding="5dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <!-- recontruction with line -->
+                <ImageView
+                    android:id="@+id/img_reconstructed_id"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/img_and_detection_id"
+                    android:padding="5dp"
+                    android:layout_width="257dp"
+                    android:layout_height="257dp"/>
+
+                <!-- Reconstruction only key points -->
+                <ImageView
+                    android:id="@+id/img_reconstructed2_id"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/img_reconstructed_id"
+                    android:padding="5dp"
+                    android:layout_width="257dp"
+                    android:layout_height="257dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </HorizontalScrollView>
+        <!-- Add button to save/export values -->
+
+<!--        <Button-->
+<!--            android:id="@+id/show_info_btn_id"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/horizontal_scroll_id"-->
+<!--            android:layout_marginTop="@dimen/top_dimens_1"-->
+<!--            app:layout_constraintLeft_toRightOf="@id/export_btn_id"-->
+<!--            android:layout_marginStart="@dimen/margin_dimens"-->
+<!--            android:layout_marginBottom="@dimen/top_dimens_2"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:padding="3dp"-->
+<!--            android:text="show info"-->
+<!--            android:textColor="@color/colorWhite"/>-->
+
+        <Button
+            android:id="@+id/export_btn_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/horizontal_scroll_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="@color/colorWhite"
+            android:text="Export keypoints to CSV"
+            android:background="@drawable/buttonstyle"
+            android:padding="@dimen/top_dimens_1"
+            android:layout_marginStart="@dimen/margin_dimens"
+            android:layout_marginTop="@dimen/top_dimens_1"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/show_hide_info_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/horizontal_scroll_id"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/switch_out_line_btn"
+            android:layout_marginTop="@dimen/top_dimens_1"
+            android:layout_marginEnd="@dimen/margin_dimens"
+            app:showText="true"
+            android:textOn="Show Info"
+            android:textOff="Hide Info"
+            android:textSize="20sp"
+            app:track="@drawable/switch_out_line_btn"
+            android:thumb="@drawable/switch_bg_btn">
+
+        </androidx.appcompat.widget.SwitchCompat>
+
+
+        <!-- Info person score and size -->
+        <TextView
+            android:id="@+id/show_person_score_size_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/export_btn_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="@dimen/top_dimens_1"
+            android:layout_marginStart="@dimen/margin_dimens"/>
+
+<!--        &lt;!&ndash; Info person height &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/show_person_size_id"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/show_person_score_id"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                android:layout_marginTop="@dimen/top_dimens_1"-->
+<!--                android:fontFamily="sans-serif-condensed"-->
+<!--                android:layout_marginStart="@dimen/margin_dimens"/>-->
+
+<!--        &lt;!&ndash; Head height &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/head_height_id"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/show_person_size_id"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            android:layout_marginStart="@dimen/margin_dimens"-->
+<!--            android:fontFamily="sans-serif-condensed"-->
+<!--            android:layout_marginTop="@dimen/top_dimens_1"/>-->
+
+<!--        &lt;!&ndash; Ratio a &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/ratio_id"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/head_height_id"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            android:layout_marginStart="@dimen/margin_dimens"-->
+<!--            android:fontFamily="sans-serif-condensed"-->
+<!--            android:layout_marginTop="@dimen/top_dimens_1"/>-->
+
+        <!-- Content of CSV file -->
+        <TextView
+            android:id="@+id/show_csv_content_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/export_btn_id"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/top_dimens_1"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginEnd="@dimen/margin_dimens"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</FrameLayout>
